@@ -1,0 +1,91 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+#define MAXLEN 20			//最大字符串长度
+enum OperEnum
+{
+	MATCH = 0,
+	INSERTNUM1,
+	INSERTNUM2,
+	DELETENUM1,
+	DELETENUM2
+};
+/*
+ * 描述:     distance代表距离，operate代表操作
+ * 创建人:   TheBeatles1994
+ */
+typedef struct
+{
+	int distance;
+	int operate;
+}StrUnit;
+StrUnit strdist[MAXLEN][MAXLEN];
+/*
+ * 描述:     比较两字符串是否相等，相等返回0，不等返回1
+ * 创建人:   TheBeatles1994
+ */
+int CompareChars(char ch1, char ch2)
+{
+	return (ch1 == ch2 ? 0 : 1);
+}
+
+/*
+ * 函数功能: 比较两字符串的距离
+ * 创建人:   TheBeatles1994
+ */
+int CompareStrings(char str1[], char str2[])
+{
+	int str1len = strlen(str1);
+	int str2len = strlen(str2);
+	char tempstr1[MAXLEN] = " ";
+	char tempstr2[MAXLEN] = " ";
+
+	strcat_s(tempstr1, MAXLEN,str1);
+	strcat_s(tempstr2, MAXLEN,str2);
+	//初始化strdist
+	for (int i = 1; i <= str1len; i++)
+	{
+		strdist[i][0].distance = i;
+		strdist[0][i].distance = i;
+	}
+	for (int i = 1; i <= str1len; i++)
+	{
+		for (int j = 1; j <= str2len; j++)
+		{
+			int ope[5];
+			ope[MATCH] = strdist[i - 1][j - 1].distance + CompareChars(tempstr1[i],tempstr2[j]);
+			ope[INSERTNUM1] = strdist[i][j - 1].distance + 1;
+			ope[INSERTNUM2] = strdist[i - 1][j].distance + 1;
+			ope[DELETENUM1] = ope[INSERTNUM2];
+			ope[DELETENUM2] = ope[INSERTNUM1];
+			strdist[i][j].distance = ope[MATCH];
+			strdist[i][j].operate = MATCH;
+			for (int k = INSERTNUM1; k <= DELETENUM2; k++)
+			{
+				if (strdist[i][j].distance > ope[k])
+				{
+					strdist[i][j].distance = ope[k];
+					strdist[i][j].operate = k;
+				}
+			}
+		}
+	}
+
+	return strdist[str1len][str2len].distance;
+}
+
+int main()
+{
+	char str1[MAXLEN + 1];
+	char str2[MAXLEN + 1];
+
+	gets_s(str1);
+	gets_s(str2);
+
+	cout << CompareStrings(str1, str2) << endl;
+
+	system("pause");
+	return 0;
+}

@@ -1,0 +1,2 @@
+本文件夹第一次使用了GitHub，注意自己创建了SSH Key，在C:\Users\Administrator目录下看有木有.ssh文件夹，有的话登录GitHub添加ssh，将其中的id_rsa.pub中内容复制过去即可。
+（使用ssh-keygen -t rsa -C "youremail@example.com"命令创建ssh key）
