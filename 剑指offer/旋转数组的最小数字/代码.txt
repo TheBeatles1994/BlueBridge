@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int minNumberInRotateArray(vector<int> rotateArray) {
+        int left, mid, right;
+        
+        if(rotateArray.size() == 0)
+            return 0;
+        
+        mid = rotateArray.size()/2;
+        left = 0;
+        right = rotateArray.size()-1;
+        
+        while(left+1!=right)
+        {
+            if(rotateArray[mid]>rotateArray[right] || rotateArray[mid]>rotateArray[left])
+            {
+                left = mid;
+                mid = (left+right)/2;
+            }
+            else if(rotateArray[mid]<rotateArray[right] || rotateArray[mid]<rotateArray[left])
+            {
+                right = mid;
+                mid = (left+right)/2;
+            }
+            else if(rotateArray[mid]<rotateArray[left])
+            {
+                right--;
+            }
+        }
+        
+        return rotateArray[right];
+    }
+};
