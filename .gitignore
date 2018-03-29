@@ -1,2 +1,5 @@
-Practice/
+debug/
+release/
+Makefile*
+*.user
 
