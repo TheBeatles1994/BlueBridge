@@ -5,40 +5,22 @@
 
 using namespace std;
 
-struct ListNode {
+struct TreeNode {
     int val;
-    struct ListNode *next;
-    ListNode(int x) :
-        val(x), next(NULL) {
-    }
-};
-
-ListNode* ReverseList(ListNode* pHead) {
-    ListNode *node = pHead;
-    ListNode *tempNode;
-    int length=0;
-    stack<int> sData;
-
-    while(node)
-    {
-        length++;
-        sData.push(node->val);
-        node = node->next;
-    }
-    node = pHead;                   //node指向第一个指针
-    while(node)
-    {
-        node->val = sData.top();
-        sData.pop();
-        node = node->next;
+    struct TreeNode *left;
+    struct TreeNode *right;
+    TreeNode(int x) :
+        val(x), left(NULL), right(NULL) {
     }
 
-    return pHead;
+bool HasSubtree(TreeNode* pRoot1, TreeNode* pRoot2)
+{
+
 }
 
 int main(int argc, char *argv[])
 {
-    ListNode *headNode;
+    ListNode *headNode1,*headNode2;
     ListNode *inNode, *preNode;
     int n, cond;
     cond = 1;
@@ -51,7 +33,7 @@ int main(int argc, char *argv[])
         inNode = new ListNode(in);
         if(cond == 1)
         {
-            headNode = inNode;
+            headNode1 = inNode;
         }
         else
         {
@@ -62,7 +44,28 @@ int main(int argc, char *argv[])
         cond++;
     }while(cond<=n);
 
-    inNode = ReverseList(headNode);
+    cond = 1;
+    cin>>n;
+    do
+    {
+        int in;
+        cin >>in;
+        inNode = new ListNode(in);
+        if(cond == 1)
+        {
+            headNode2 = inNode;
+        }
+        else
+        {
+            preNode->next = inNode;
+        }
+        preNode = inNode;
+        inNode = preNode->next;
+        cond++;
+    }while(cond<=n);
+
+    //inNode = Merge(headNode1, headNode2);
+    inNode = Merge(headNode1, NULL);
     while(inNode)
     {
         cout << inNode->val<<" ";
