@@ -1,75 +1,133 @@
+/*
+ * 学习搜索二叉树BST
+ */
 #include<iostream>
 #include<algorithm>
 #include<vector>
 #include<stack>
 
 using namespace std;
-
-#define MAXCOUNT 50
-#define KCOUNT 10
-#define MAXVALUE 6550000
-#define MINVALUE -6550000
-
 /*
- * 先只求正值
+ * BST定义
  */
-long long func(int data[], int n, int k, int d)
+typedef struct BSTnode
 {
-    long long dpmax[MAXCOUNT+1][KCOUNT+1]={0};
-    long long dpmin[MAXCOUNT+1][KCOUNT+1]={0};
-    long long max, min;
-
-    for(int i=1; i<=n;i++)                  //选择学生j：1
+    BSTnode *left;
+    BSTnode *right;
+    int val;
+    BSTnode(int n):val(n), left(NULL),right(NULL){}
+}BST, *pBST;
+/*
+ * 函数功能：
+ * 构造BST
+ * 注意指针的引用！！！
+ */
+void insertNode(pBST &node, int n)
+{
+    if(!node)
     {
-        dpmax[i][1] = data[i];
-        dpmin[i][1] = data[i];
+        node = new BSTnode(n);
     }
-
-    for(int j=2;j<=k;j++)                   //选择学生j：2~k
+    else
     {
-        for(int i=j;i<=n;i++)               //所有学生i：j~n
+        if(n<node->val)
         {
-            max = MINVALUE;
-            min = MAXVALUE;
-            for(int m=j-1;m<=i-1;m++)         //选择m：1~i-1之间的最大值和最小值
-            {
-                if(max<dpmax[m][j-1] && i-m<=d)
-                    max = dpmax[m][j-1];
-                if(min>dpmin[m][j-1] && i-m<=d)
-                    min = dpmin[m][j-1];
-            }
-            if(data[i]>0)
-            {
-                dpmax[i][j] = data[i] * max;
-                dpmin[i][j] = data[i] * min;
-            }
-            else
-            {
-                dpmax[i][j] = data[i] * min;
-                dpmin[i][j] = data[i] * max;
-            }
+            insertNode(node->left, n);
+        }
+        else
+        {
+            insertNode(node->right, n);
         }
     }
-    max = MINVALUE;
-    for(int i=k;i<=n;i++)
+}
+/*
+ * 函数功能：
+ * 中序遍历 left mid right
+ */
+void inOrderTraverse(BST *node)
+{
+    if(!node)
+        return;
+
+    inOrderTraverse(node->left);
+    cout << node->val <<" ";
+    inOrderTraverse(node->right);
+}
+/*
+ * 函数功能：
+ * 前序遍历 mid left right
+ */
+void preOrderTraverse(BST *node)
+{
+    if(!node)
+        return;
+
+    cout << node->val <<" ";
+    preOrderTraverse(node->left);
+    preOrderTraverse(node->right);
+}
+/*
+ * 函数功能：
+ * 后序遍历 left right mid
+ */
+void postOrderTraverse(BST *node)
+{
+    if(!node)
+        return;
+
+    postOrderTraverse(node->right);
+    postOrderTraverse(node->left);
+    cout << node->val <<" ";
+}
+/*
+ * 函数功能：
+ * 判断该数组是不是某二叉搜索树的后序遍历
+ * 后序遍历 left right mid
+ */
+bool recurFunc(vector<int> sequence, int start, int end)
+{
+
+}
+bool VerifySquenceOfBST(vector<int> sequence) {
+    if(sequence.empty())
+        return false;
+
+    int mid = sequence[sequence.size()-1];
+    int midOrder;
+    /* 找到根节点的序号 */
+    for(int i=0;i<sequence.size();i++)
     {
-        if(max<dpmax[i][k])
-            max = dpmax[i][k];
+        if(sequence[i]>=mid)
+        {
+            midOrder = i;
+            break;
+        }
     }
 
-    return max;
-}
+    bool rst=true;
+    rst = rst && recurFunc(sequence, 0, midOrder-1);                    //左边序列
+    rst = rst && recurFunc(sequence, midOrder, sequence.size()-1-1);    //右边序列(除去根节点)
+    return rst;
 
+}
 int main(int argc, char *argv[])
 {
-    int n, k, d;
-    int data[MAXCOUNT + 1];
+    vector<int> data={4, 5, 2, 1, 0, 9, 3, 7, 6, 8, 4};
+    BST *node = NULL;
 
-    cin>>n;
-    for(int i=1; i<=n;i++)
-        cin >> data[i];
-    cin >> k>>d;
-    cout << func(data, n, k, d) <<endl;
+    for(int i=0;i<data.size();i++)
+    {
+        insertNode(node, data[i]);
+    }
+    cout<<"inOrderTraverse:"<<endl;
+    inOrderTraverse(node);
+    cout<<endl;
+    cout<<"preOrderTraverse:"<<endl;
+    preOrderTraverse(node);
+    cout<<endl;
+    cout<<"postOrderTraverse:"<<endl;
+    postOrderTraverse(node);
+    cout<<endl;
 
     return 0;
 }
