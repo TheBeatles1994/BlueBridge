@@ -7,6 +7,7 @@ set CUR_PATH=%~dp0
 set FILE_NAME=%CUR_PATH%..\TestPro\main.cpp
 set TARGET_DIR_NAME=%CUR_PATH%
 set TARGET_REF_NAME=%CUR_PATH%题目.txt
+mkdir 0待命名文件夹
 
 copy /B %FILE_NAME% %TARGET_DIR_NAME%
 echo 题目:>> %TARGET_REF_NAME%
