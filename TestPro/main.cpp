@@ -14,18 +14,17 @@ int num[N/SIZE +1];
 /* 设置相应位为1 */
 void set(int i)
 {
-    int temp = num[i>>SHIFT] & (0x11 << ((i&MASK)<<1));
+    int temp = num[i>>SHIFT] & (3 << ((i&MASK)<<1));
     temp = temp >> ((i&MASK)<<1);
 
-    if(temp == 0)
+    if(temp == 0)   //为0置1
     {
         num[i>>SHIFT] |= (1 << ((i&MASK)<<1));
-        temp = num[i>>SHIFT];
     }
-    else
+    else            //非0置2
     {
+        num[i>>SHIFT] &= ~(3 << ((i&MASK)<<1));
         num[i>>SHIFT] |= (2 << ((i&MASK)<<1));
-        temp = num[i>>SHIFT];
     }
 }
 /* 初始化相应位为0 */
