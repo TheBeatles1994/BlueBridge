@@ -19,26 +19,24 @@ void set(int i)
 
     if(temp == 0)
     {
-        num[i>>SHIFT] |= (0x01 << ((i&MASK)<<1));
+        num[i>>SHIFT] |= (1 << ((i&MASK)<<1));
         temp = num[i>>SHIFT];
-        printf("%x\n", temp);
     }
     else
     {
-        num[i>>SHIFT] |= (0x10 << ((i&MASK)<<1));
+        num[i>>SHIFT] |= (2 << ((i&MASK)<<1));
         temp = num[i>>SHIFT];
-        printf("%x\n", temp);
     }
 }
 /* 初始化相应位为0 */
 void clr(int i)
 {
-    num[i>>SHIFT] &= ~(0x11 << ((i&MASK)<<1));
+    num[i>>SHIFT] &= ~(3 << ((i&MASK)<<1));
 }
 /* 测试所在位是否为1 */
 int test(int i)
 {
-    int temp = num[i>>SHIFT] & (0x11 << ((i&MASK)<<1));
+    int temp = num[i>>SHIFT] & (3 << ((i&MASK)<<1));
     temp = temp >> ((i&MASK)<<1);
 
     return temp;
