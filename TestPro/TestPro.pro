@@ -9,3 +9,6 @@ TEMPLATE = app
 
 SOURCES += main.cpp
 
+HEADERS += \
+    test.h
+
