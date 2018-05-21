@@ -4,39 +4,43 @@
 
 using namespace std;
 
-vector<int> FindNumbersWithSum(vector<int> array,int sum)
+int LastRemaining_Solution(int n, int m)
 {
-    vector<int> rst;
+    vector<int> vec;
 
-    if(array.empty())
-        return rst;
-
-    vector<int>::iterator ia;
-    vector<int>::reverse_iterator ib;
-    for(ia=array.begin(), ib=array.rbegin();*ia!=*ib && ia!=array.end() && ib!=array.rend();)
+    vec.reserve(n);
+    for(int i=0;i<n;i++)
     {
-        if((*ia) + (*ib) > sum)
-            ib++;
-        else if(*ia + *ib == sum)
-        {
-            rst.push_back(*ia);
-            rst.push_back(*ib);
-            break;
-        }
-        else
-            ia++;
+        vec.push_back(i);
     }
 
-    return rst;
+    auto rname = vec.begin();
+    while(vec.size() != 1)
+    {
+        for(int i=0;i<m;i++)
+        {
+            if(rname == vec.end())
+                rname = vec.begin();
+            rname++;
+        }
+        rname = vec.erase(rname);
+        if(rname == vec.end())
+            rname = vec.begin();
+    }
+
+    return vec[0];
 }
 
 int main(int argc, char *argv[])
 {
-    vector<int> array={1,2,3,4,5,6,7,8,9};
-    vector<int> rst = FindNumbersWithSum(array, 14);
+    vector<int> array={0,1,2,3,4,5,6,7,8,9};
+    int n, m;
 
+    while(cin>>n>>m)
+    {
+        cout <<LastRemaining_Solution(n, m)<<endl;
+    }
 
-    cout << rst[0]<<" "<<rst[1]<<endl;
 
     return 0;
 }
