@@ -46,7 +46,7 @@ void createList()
     }
 }
 /* 练习用：输出链表 */
-void showList(ListNode* pHead)
+void showList()
 {
     ListNode *temp = pHead;
 
@@ -58,47 +58,36 @@ void showList(ListNode* pHead)
 
     cout<<endl;
 }
-/* 删除链表中重复的节点 */
-/* 没有释放删除点的内存 */
-ListNode* deleteDuplication(ListNode* pHead)
+
+ListNode* EntryNodeOfLoop(ListNode* pHead)
 {
-    if(pHead)
-    {
-        if(!pHead->next)
-            return pHead;
-    }
-    else
+    if(!pHead)
         return NULL;
 
-    //若开头有重复
-    if(pHead->val == pHead->next->val)
-    {
-        ListNode *current = pHead;
+    ListNode *fast = pHead->next->next;
+    ListNode *slow = pHead->next;
 
-        while(current->val == current->next->val)
-        {
-            current = current->next;
-            if(!current->next)
-                return NULL;
-        }
-
-        return deleteDuplication(current->next);
-    }
-    else
+    while(fast != slow)
     {
-        pHead->next = deleteDuplication(pHead->next);
-        return pHead;
+        fast = fast->next->next;
+        slow = slow->next;
     }
+
+    slow = pHead;
+    while(fast != slow)
+    {
+        fast = fast->next;
+        slow = slow->next;
+    }
+
+    return slow;
 }
 
 int main(int argc, char *argv[])
 {
-    while(1)
-    {
-        createList();
-        showList(deleteDuplication(pHead));
-    }
+    createList();
 
+    showList();
 
     return 0;
 }
