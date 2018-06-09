@@ -2,27 +2,31 @@
 #include <vector>
 
 using namespace std;
-/* 简单选择排序 */
-void InsertSort(vector<int> &data)
+/* 直接插入排序 */
+void ShellSort(vector<int> &data)
 {
-    for(int i=0;i<data.size()-1;i++)
+    int increment = data.size();
+    int temp;
+    do
     {
-        int min=data[0];
-        for(int j=i+1;j<data.size();j--)
+        increment = increment/3+1;
+
+        for(int i=increment;i<data.size();i++)
         {
-            if(min>data[j])
+            if(data[i]<data[i-increment])
             {
-                min = data[j];
+
             }
         }
-    }
+
+    }while(increment>1);
 }
 
 int main()
 {
     vector<int> data = {7,8,5,6,1,3,4,9,6,5};
 
-    InsertSort(data);
+    ShellSort(data);
 
     for(auto i:data)
         cout << i<<" ";

@@ -1,0 +1,8 @@
+难点主要是在next数组部分：
+substring：a a b a a b a a a
+next:	   0 1 0 1 2 3 4 5 2
+
+next[i]代表的是substring前i+1位中前缀和后缀相同的字符串个数
+
+
+视频学习：https://www.bilibili.com/video/av3246487?from=search&seid=8382893617816578518
