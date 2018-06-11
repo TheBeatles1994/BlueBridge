@@ -8,5 +8,9 @@ CONFIG -= app_bundle
 
 TEMPLATE = app
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    test.cpp
+
+HEADERS += \
+    test.h
 

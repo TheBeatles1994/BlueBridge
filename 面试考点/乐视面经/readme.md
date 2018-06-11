@@ -2,10 +2,12 @@
 
 > 年份：2017
 > 岗位：C/C++方向
-> 来源：https://www.cnblogs.com/HuangWj/p/5473465.html
+> 来源：https://blog.csdn.net/watson2016/article/details/53122489
 
 no|Q|A
 ---|:--|:--
 01|C++看过哪些书|1.《C++ Primer》<br>2.待补充
-02|倒数第k个结点|ok
-03|编译器优化陷阱|待看 https://www.cnblogs.com/HuangWj/p/5473465.html
+02|倒数第k个结点|两个指针ok
+03|一个指针指向的内容经常变化 , 如何防止编译器去优化它|分析：<br>若一个指针指向的内容经常变化，则编译器可能会把该指针变量从内存装入CPU寄存器中，声明成int *volatile p则可防止编译器优化此变量
+04|Static 的作用|1. 作用域（隐藏其他.cpp文件中的全局变量）：比如在test1.cpp文件中有一个全局变量int a=4;，则在main.cpp文件中定义全局变量int a=5;时会发生multiple definition of `a'编译错误。将前者设置成static（即成为全局静态变量）可防止此错误发生。静态函数同理。在C++中推荐使用未命名的命名空间来代替此做法。<br>2.生存期（保持变量内容的持久）：两种变量存储在静态存储区：全局变量和static变量。它始终驻留在静态存储区，直到程序运行结束。<br>3.static的第三个作用是默认初始化为0。<br>4.类中定义static成员。类的静态成员不与任何对象绑定在一起，静态函数中不包含this指针，也不可声明成const。
+05|合并多个文件|[FileMerge.py](FileMerge.py)

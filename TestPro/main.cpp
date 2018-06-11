@@ -1,57 +1,37 @@
 #include <iostream>
 #include <vector>
+#include <string>
+#include <algorithm>
+#include <iomanip>
+
+//#include "test.h"
 
 using namespace std;
-/* 快速排序 */
-int Partition(vector<int> &data, int start, int end)
-{
-    int pivot_value=data[start];
-    while(start<end)
-    {
-        while(start<end && data[end]>=pivot_value)      //注意此处是大于等于
-            end--;
-        //交换数据
-//        if(start == end)
-//            break;
-        int temp = data[end];
-        data[end] = data[start];
-        data[start] = temp;
 
-        while(start<end && data[start]<=pivot_value)    //注意此处是小于等于
-            start++;
-        //交换数据
-//        if(start == end)
-//            break;
-        temp = data[end];
-        data[end] = data[start];
-        data[start] = temp;
+double StringToFloat(string str)
+{
+    double rst=0;
+
+    int decimal = str.find('.');
+    for(int i=0;i<decimal;i++)
+    {
+        rst += (str[i]-'0')*pow(10, decimal-1-i);
+    }
+    for(int i=decimal+1;i<str.length();i++)
+    {
+        rst += (str[i]-'0')*pow(10,decimal-i);
     }
 
-    return start;
-}
-
-void QSort(vector<int> &data, int start, int end)
-{
-    if(start<end)
-    {
-        int pivot=Partition(data, start, end);
-        QSort(data, start, pivot-1);
-        QSort(data, pivot+1, end);
-    }
-}
-
-void QuickSort(vector<int> &data)
-{
-    QSort(data, 0, data.size()-1);
+    return rst;
 }
 
 int main()
 {
-    vector<int> data = {5,1,9,3,7,4,8,6,2};
+    string str;
+    while(cin>>str)
+    {
+        cout <<setprecision(15)<<StringToFloat(str)<<endl;
+    }
 
-    QuickSort(data);
-
-    for(int i=0;i<data.size();i++)
-        cout << data[i]<<" ";
     return 0;
 }
