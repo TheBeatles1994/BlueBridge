@@ -2,7 +2,10 @@
 #include <stdlib.h>
 #include <iostream>
 
-using namespace std;
+using namespace std;、
+/*
+每两位存储一位数字，00表示未出现， 01表示出现一次， 10表示出现多次
+*/
 #if 1
 #define SIZE    16
 #define N       1000        //最大上限个数
