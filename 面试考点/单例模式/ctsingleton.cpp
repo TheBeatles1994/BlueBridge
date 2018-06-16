@@ -8,6 +8,7 @@ CTSingleton &CTSingleton::getInstance()
     /*If control enters the declaration concurrently
       while the variable is being initialized, the concurrent
       execution shall wait for completion of the initialization.*/
+	 static CTSingleton instance;
 
     return instance;
 }
