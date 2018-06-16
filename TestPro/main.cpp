@@ -1,10 +1,16 @@
 #include <iostream>
 #include <vector>
 
+<<<<<<< HEAD
 using namespace std;
 /* 二叉排序树 */
 struct BiTree
 {
+=======
+#include"ctsingleton.h"
+
+struct TreeNode {
+>>>>>>> 添加单例模式
     int val;
     struct BiTree *left;
     struct BiTree *right;
@@ -195,7 +201,21 @@ void deleteNode(pBTree &tree, int val)
 
 int main()
 {
+<<<<<<< HEAD
     createBiTree(head);
+=======
+#if 0
+    TreeNode tree[9]={0,1,2,3,4,5,6,7,8};
+    tree[0].val = 0;
+    tree[1].val = 1;
+    tree[2].val = 2;
+    tree[3].val = 3;
+    tree[4].val = 4;
+    tree[5].val = 5;
+    tree[6].val = 6;
+    tree[7].val = 7;
+    tree[8].val = 8;
+>>>>>>> 添加单例模式
 
     int in;
     while(cin>>in)
@@ -205,5 +225,17 @@ int main()
         cout<<endl;
     }
 
+<<<<<<< HEAD
+=======
+    PostOrderTraverse(tree);
+    for(auto i:rst)
+        cout<<i<<" ";
+#else
+    CTSingleton::getInstance().doSth(0);
+
+    CTSingleton::getInstance().doSth(4);
+#endif
+
+>>>>>>> 添加单例模式
     return 0;
 }

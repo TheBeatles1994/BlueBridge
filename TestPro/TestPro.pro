@@ -9,8 +9,8 @@ CONFIG -= app_bundle
 TEMPLATE = app
 
 SOURCES += main.cpp \
-    test.cpp
+    ctsingleton.cpp
 
 HEADERS += \
-    test.h
+    ctsingleton.h
 
