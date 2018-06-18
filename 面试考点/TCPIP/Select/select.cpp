@@ -4,7 +4,8 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-int main(void)
+int
+main(void)
 {
     fd_set rfds;
     struct timeval tv;
