@@ -3,39 +3,35 @@
 
 using namespace std;
 /* 归并排序 */
-void Merge(vector<int> &data, int start, int mid, int end)
+void Merge(vector<int> &data, int begin, int mid, int end)
 {
-    vector<int> tempdata(end+1);
-    int i, j, k=0;
-    for(i=start, j=mid+1;i<=mid && j<=end;k++)
+    vector<int> datacopy(data);
+    int i, j, index=0;
+    i = begin;
+    j = mid+1;
+    index = begin;
+
+    while(i<=mid && j<=end)
     {
-        if(data[i]>=data[j])
-        {
-            tempdata[k] = data[j++];
-        }
+        if(datacopy[i]<=datacopy[j])
+            data[index++] = datacopy[i++];
         else
-        {
-            tempdata[k] = data[i++];
-        }
+            data[index++] = datacopy[j++];
     }
 
-    for(;i<=mid;k++)
-        tempdata[k]=data[i++];
-    for(;j<=end;k++)
-        tempdata[k]=data[j++];
+    while(i<=mid)
+        data[index++] = datacopy[i++];
+    while(j<=end)
+        data[index++] = datacopy[j++];
 
-    for(i=start,j=0;i<=end && j<tempdata.size();i++,j++)
-    {
-        data[i] = tempdata[j];
-    }
 }
 
 void MSort(vector<int> &data, int start, int end)
 {
-    if(start == end)
+    if(start >= end)
         return;
 
-    int mid = (start+end)/2;
+    int mid = start + (end-start)/2;
 
     MSort(data, start, mid);
     MSort(data, mid+1, end);
@@ -49,7 +45,7 @@ void MergeSort(vector<int> &data)
 
 int main()
 {
-    vector<int> data = {12, 22, 3, 4, 43, 47, 56};
+    vector<int> data = {10,9,8,7,6,5,4,3,2,1};
 
     MergeSort(data);
 

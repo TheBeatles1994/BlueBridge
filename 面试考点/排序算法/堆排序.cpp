@@ -2,7 +2,7 @@
 #include <vector>
 
 using namespace std;
-void HeapAdjust(vector<int> &data, int l1, int l2);
+void HeapAdjust(vector<int> &data, int begin, int end);
 /* 堆排序 */
 void HeapSort(vector<int> &data)
 {
@@ -21,22 +21,32 @@ void HeapSort(vector<int> &data)
 }
 /* 堆顺序调整 */
 //l1为起始点，l2为结束点
-void HeapAdjust(vector<int> &data, int l1, int l2)
+void HeapAdjust(vector<int> &data, int begin, int end)
 {
-    int i;
-    data[0] = data[l1];
-    for(i=l1*2;i<=l2;i*=2)
+    int temp = data[begin];
+    int index = 0;
+    while(2*begin<=end)     //not a leaf node
     {
-        /* 找出最大子树 */
-        if(i<l2)
-            if(data[i]<data[i+1])
-                i++;
-        if(data[0]>data[i])
+        if(2*begin+1<=end)  //have a right child
+        {
+            if(data[2*begin]>=data[2*begin+1])
+            {
+                index = 2*begin;
+            }
+            else
+                index = 2*begin+1;
+        }
+        else
+            index = 2*begin;
+        if(temp<data[index])
+        {
+            data[begin] = data[index];
+            begin = index;
+        }
+        else
             break;
-        data[l1] = data[i];
-        l1 = i;
     }
-    data[i/2] = data[0];
+    data[begin] = temp;
 }
 
 int main()
@@ -49,3 +59,4 @@ int main()
         cout << data[i]<<" ";
     return 0;
 }
+
