@@ -1,0 +1,35 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int data[1001];
+
+int main() {
+    int n;//访问次数
+    int temp;//读数据
+    vector<int> rst;
+
+    cin >>n;
+
+    for(int i=0;i<n;i++)
+    {
+        cin>>temp;
+        if(data[temp] == 0)
+        {
+            if(rst.size() < 10)
+            {
+                data[temp] = 1;
+                rst.push_back(temp);
+            }
+            if(rst.size() == 10)
+                break;
+        }
+    }
+
+    cout<<rst.size()<<endl;
+    for(auto i:rst)
+        cout<<i<<endl;
+
+    return 0;
+}

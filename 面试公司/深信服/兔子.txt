@@ -1,0 +1,53 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+vector<int> data;
+int k,n;//洞个数  检查天数
+//time 抓第几次
+//pos 兔子位置
+bool func(int time, int pos)
+{
+    if(data[time]-1 == pos)   //抓到
+        return true;
+    else if(time == data.size())
+    {
+        return false;
+    }
+    else
+    {
+        if(pos == 0)
+            return func(time+1, pos+1);
+        else if(pos == k-1)
+            return func(time+1, pos-1);
+        else
+        {
+            return (func(time+1, pos+1) && func(time+1, pos-1));
+        }
+    }
+}
+
+int main() {
+    cin >> k >> n;
+
+    for(int i=0;i<n;i++)
+    {
+        int temp;
+        cin>>temp;
+        data.push_back(temp);
+    }
+
+    bool rst=true;
+    for(int i=0;i<k;i++)
+    {
+        rst = rst & func(0, i);
+        if(!rst)
+        {
+            cout<<"No"<<endl;
+            return 0;
+        }
+    }
+    cout<<"Yes"<<endl;
+    return 0;
+}
