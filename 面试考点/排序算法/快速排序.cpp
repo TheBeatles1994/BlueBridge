@@ -5,6 +5,7 @@ using namespace std;
 /* 快速排序 */
 int Partition(vector<int> &data, int start, int end)
 {
+	/* 可以不要下面的pivot_value */
     int pivot_value=data[start];
     while(start<end)
     {

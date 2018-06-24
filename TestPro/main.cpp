@@ -1,69 +1,24 @@
 #include <iostream>
 #include <vector>
-#include <stack>
+#include <windows.h>
 
 using namespace std;
 
-vector<int> data;
-int m;//题目数量
-
-//i表示第i个数，sum表示上次求和结果
-bool func(bool *flags,int i, int sum)
+int main()
 {
-    if(i == m)
+    int n;
+
+    cin >> n;
+
+    int count = 0;
+
+    while(n)
     {
-        if(sum==100)
-            return true;
-        else
-            return false;
+        count++;
+        n = n&(n-1);
     }
 
-    if(sum<100)
-    {
-        flags[i] = false;
-        if(func(flags, i+1, sum+data[i]))   //加了这个值
-        {
-            flags[i] = true;
-            return true;
-        }
-        if(func(flags, i+1, sum))           //不加这个值
-            return true;
-        else
-            return false;
-    }
-    else if(sum > 100)
-    {
-        return false;
-    }
-    else
-    {
-        return true;
-    }
-
-    return false;
-}
-
-int main() {
-//8个数： 1 3 5 6 20 10 30 40
-    cin >>m;
-    bool *flags = new bool[m];
-    for(int i=0;i<m;i++)    //数组初始化
-        flags[i] = false;
-
-    for(int i=0;i<m;i++)
-    {
-        int temp;
-        cin >> temp;
-        data.push_back(temp);
-    }
-
-    func(flags, 0, 0);
-
-    for(int i=0;i<m;i++)
-    {
-        if(flags[i])
-            cout<<i<<endl;
-    }
+    cout<<count<<endl;
 
     return 0;
 }
