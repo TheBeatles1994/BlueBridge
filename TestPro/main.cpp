@@ -2,7 +2,7 @@
 #include <bitset>
 #include <iomanip>
 #include <math.h>
-#include <windows.h>
+//#include <windows.h>
 using namespace std;
 
 struct box_props
@@ -44,15 +44,22 @@ int main()
 {
     //cout << sizeof(struct S)<<endl;
 
-    struct S3 s;
+    //struct S3 s;
 //    while(1)
 //    {
 //        ++s.b;
 //        std::cout << (int)s.b << '\n'; // output: 0
 //        Sleep(10);
 //    }
-    cout<<sizeof(s)<<endl;
+    //cout<<sizeof(s)<<endl;
+    int num;
+    while(cin>>num)
+    {
+        cout<<num*2<<endl;
+        if(num == 5)
+            break;
+    }
 
-    return 0;
+    return 4;
 }
 
