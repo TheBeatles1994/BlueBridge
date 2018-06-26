@@ -1,65 +1,43 @@
 #include <iostream>
-#include <bitset>
-#include <iomanip>
-#include <math.h>
-//#include <windows.h>
+#include <thread>
+#include <exception>
 using namespace std;
 
-struct box_props
+bool doNot = 1; // this bool will prevent func1 and func2 from doing their tasks
+thread* fn1; // pointer to t1 thread (defined in main function)
+thread* fn2; // pointer to t2 thread (defined in main function)
+void func1(bool x)
 {
-     unsigned int opaque       : 1;
-     unsigned int fill_color   : 3;
-     unsigned int              : 4; // fill to 8 bits
-     unsigned int show_border  : 1;
-     unsigned int border_color : 3;
-     unsigned int border_style : 2;
-     unsigned char             : 0; // fill to nearest byte (16 bits)
-     unsigned char width       : 4, // Split a byte into 2 fields of 4 bits
-                   height      : 4;
-};
-struct S1 {
-    // will usually occupy 2 bytes:
-    // 3 bits: value of b1
-    // 2 bits: unused
-    // 6 bits: value of b2
-    // 2 bits: value of b3
-    // 3 bits: unused
-    unsigned char b1 : 3, : 2, b2 : 6, b3 : 2;
-};
-struct S2 {
- // three-bit unsigned field,
- // allowed values are 0...7
- unsigned char b : 6;
-};
+    while(doNot) {;} // waiting for changing doNot to false (doing it in main function)
+    ::fn2->join(); // trying to cause deadlock
+}
 
-struct S3
+void func2(bool x)
 {
-    unsigned int a : 1;
-    unsigned int   : 2;/*该2位不能使用*/
-    unsigned int b : 3;
-    unsigned int c  :2;
-};
+    while(doNot) {;} // waiting for changing doNot to false (doing it in main function)
+    ::fn1->join(); // trying to cause deadlock
+}
+
 
 int main()
 {
-    //cout << sizeof(struct S)<<endl;
-
-    //struct S3 s;
-//    while(1)
-//    {
-//        ++s.b;
-//        std::cout << (int)s.b << '\n'; // output: 0
-//        Sleep(10);
-//    }
-    //cout<<sizeof(s)<<endl;
-    int num;
-    while(cin>>num)
+    // entire code of main() in 'try'
+    try
     {
-        cout<<num*2<<endl;
-        if(num == 5)
-            break;
+        thread t1(func1, 1);
+        thread t2(func2, 1);
+        ::fn1 = &t1;
+        ::fn2 = &t2;
+        ::doNot = 0;
+        t1.join();
+        t2.join();
+        cout << "Hello!";
     }
-
-    return 4;
+    catch(exception& e) // catching it. You can type 'std::system_error& e', according to the code's output
+    {
+        e.what();
+        // ...
+        cout<<"error"<<endl;
+    }
+    return 0;
 }
-
