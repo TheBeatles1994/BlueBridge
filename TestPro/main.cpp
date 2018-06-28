@@ -1,56 +1,40 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
+#include <iostream>
 
-int done = 0;
-pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
+using namespace std;
 
-void thread_exit()
+class parent
 {
-    pthread_mutex_lock(&mutex);
+public:
+    parent(int a):num(a){}
+    int getnum(){return num;}
+private:
+    int num;
+};
 
-    done = 1;
-    //pthread_cond_signal函数的作用是发送一个信号给另外一个正在处于阻塞等待状态的线程,使其脱离阻塞状态,继续执行.如果没有线程处在阻塞等待状态,pthread_cond_signal也会成功返回。
-    pthread_cond_signal(&cond);
-    //释放锁，使得pthread_cond_wait可以正常运行
-    pthread_mutex_unlock(&mutex);
-}
-
-void *child(void *args)
+class child:public parent
 {
-    printf("child\n");
+public:
+    child(int a):parent(a){}
 
-    thread_exit();
-
-    return NULL;
-}
-
-void thread_join()
-{
-    //先于child线程，把mutex拿到，并上锁
-    pthread_mutex_lock(&mutex);
-    /*pthread_cond_wait()函数一进入wait状态就会自动release mutex。
-     * 当其他线程通过pthread_cond_signal()或pthread_cond_broadcast，把该线程唤醒，使pthread_cond_wait()通过（返回）时，该线程又自动获得该mutex。*/
-    while(done == 0)
-        pthread_cond_wait(&cond, &mutex);
-    //上面的pthread_cond_wait被唤醒线程后，mutex又重新上锁，故此处必须重新解锁
-    pthread_mutex_unlock(&mutex);
-}
+};
 
 int main()
 {
-    pthread_t p;
+    child *p = NULL;
 
-    printf("parent begin\n");
+    parent myparent(4);
+    child mychild(8);
 
-    pthread_create(&p, NULL, child, NULL);
+    p = &myparent;
 
-    thread_join();
+    cout<<p->getnum()<<endl;
 
-    printf("parend end\n");
+    p = &mychild;
+    cout<<p->getnum()<<endl;
 
-    pthread_join(p, NULL);
 
     return 0;
 }
