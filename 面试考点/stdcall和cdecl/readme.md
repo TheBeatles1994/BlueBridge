@@ -1,5 +1,5 @@
 # _stdcall
-1. 参数采用从右到左的压栈方式，被调函数自身在返回前清空堆栈。
+1. 参数采用从右到左的压栈方式，函数自身在返回前清空堆栈。
 2. **被调函数自身在返回前清空堆栈。**
 3. WIN32 Api都采用_stdcall调用方式，这样的宏定义说明了问题：#define WINAPI _stdcall
 4. 按C编译方式，_stdcall调用约定在输出函数名前面加下划线，后面加“@”符号和参数的字节数，形如_functionname@number.故int func( int a, double b )会被解释成_func@12.

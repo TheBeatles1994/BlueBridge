@@ -5,35 +5,22 @@
 
 using namespace std;
 
-class parent
+struct test
 {
-public:
-    parent(int a):num(a){}
-    int getnum(){return num;}
-private:
-    int num;
-};
-
-class child:public parent
-{
-public:
-    child(int a):parent(a){}
-
+    double data;
+    char data1;
+    int data2;
 };
 
 int main()
 {
-    child *p = NULL;
+    short myshort;
 
-    parent myparent(4);
-    child mychild(8);
+    cout<<sizeof(myshort)<<endl;
 
-    p = &myparent;
+    struct test mytest;
 
-    cout<<p->getnum()<<endl;
-
-    p = &mychild;
-    cout<<p->getnum()<<endl;
+    cout<<sizeof(mytest)<<endl;
 
 
     return 0;
