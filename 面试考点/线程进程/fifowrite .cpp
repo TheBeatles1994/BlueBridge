@@ -28,8 +28,7 @@ void *read_char(void *id)
     }
 }
 
-string rst;
-void preOrderTraverse(TreeNode *node)
+int main()
 {
     int i;
     pthread_t tid1;
