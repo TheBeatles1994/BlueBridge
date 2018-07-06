@@ -1,4 +1,4 @@
-/****************************** listing2.c ******************************/
+/****************************** listing1.c ******************************/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -51,26 +51,40 @@ int main()
     int fd;
     int i;
     int j;
-    char temp_buf[10];
+    FILE *fptr;
 
     create_test_file();
 
-    for(j=0;j < NTHLOOP; j++) {
-        temp_buf[0] = '\0';
-        fd = open(TEST_FILE, O_RDONLY);
-        i = read(fd, temp_buf, HELLO_STR_LEN);
-        if(i < 0) {
-            printf("errno is %d\n", errno);
-            exit(1);
-        }
-        temp_buf[HELLO_STR_LEN] = '\0';
-        printf("%s %d\n", temp_buf, j);
-        close(fd);
+    fptr = fopen(TEST_FILE, "r");
+    if (fptr == NULL) {
+        printf("Error in opening file. errno is %d\n", errno);
+        exit(1);
     }
 
+    fd = fileno(fptr);
+
+    fseek(fptr, 0, SEEK_END);
+    offset = ftell(fptr);
+
+    printf("offset is = %d\n", offset);
+
+    addr = mmap(0, offset, PROT_READ, MAP_SHARED, fd, 0);
+    if(addr == MAP_FAILED)
+    {
+        printf("mmap error\n");
+        exit(1);
+    }
+    for(j=0;j < NTHLOOP; j++) {
+        i = 0;
+        while(i < offset){
+            putchar(*((char *)addr + i));
+            i++;
+        }
+        printf(" %d\n",j);
+    }
+
+    fclose(fptr);
     remove_test_file();
 
     return 0;
 }
-
-
