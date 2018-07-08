@@ -1,0 +1,2 @@
+https://www.cnblogs.com/wannable/p/6021617.html
+浅析三种特殊进程:孤儿进程,僵尸进程和守护进程.
