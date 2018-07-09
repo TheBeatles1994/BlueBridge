@@ -22,7 +22,7 @@ int select(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struc
 1. 在每次调用select之前我们都要建立每个set
 2. 每个文件描述符用一个bit来表示，linux中fd_set是一个32int的数组，其中可以存放1024个bit，故每次查找fd的时间是o（n）
 3. 每次都要遍历各个文件描述符集合，去查看是否可以进行读写操作了
-4. select的有点就是很轻便
+4. select的优点就是很轻便
 ## poll
 - 跟select里面有三个文件描述符集合不同，poll函数中只有一个pollfd数据结构，比较简单
 ```
@@ -100,7 +100,7 @@ struct pollfd {
 1. 开始先创建上下文，其中参数size是内核保证能够正确处理的最大句柄数，多于这个最大数时内核可不保证效果。
 2. 在epoll等待时可以添加或删除文件描述符
 3. epoll_wait仅仅返回已经准备好读写的文件描述符个数
-4. epoll时间复杂度是O(1)
+4. epoll时间复杂度是O(1)，事件发生了内核会把该文件描述符放到一个双向链表中
 5. epoll是linux特有的，没有平台移植性
 
 ## select和epoll的性能差别
