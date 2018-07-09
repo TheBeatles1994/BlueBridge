@@ -8,21 +8,23 @@ int n,m;
 int a1,a2,p,q;
 bool zheng;
 
-int MaxFactor(int n1,int n2)//用来寻找最大公因子，欧几里德算法
+int MaxFactor(int nr,int dr)//用来寻找最大公因子，欧几里德算法
 {
-    if(n1<0)
-        n1=-n1;
+    if(nr<0)
+        nr=-nr;
 
-    int th=n1,tl=n2;
-    if(n1<n2)
-    {
-        th=n2;
-        tl=n1;
-    }
+    int th=nr,tl=dr;
+    if(nr<dr)
+    {th=dr;tl=nr;}
     if(th%tl==0)
         return tl;
     else
         return MaxFactor(tl,th%tl);
+}
+
+bool func(vector<vector<int> > &data)
+{
+
 }
 
 int main(int argc, char *argv[])
@@ -46,39 +48,29 @@ int main(int argc, char *argv[])
             ffm=q;
             if(ffm!=fm)
             {
-                if(ffz!=0)
+                if(fm==0)
                 {
-                    if(fm==0)
-                    {
-                        fz=(zheng?ffz:-ffz);
-                        fm=ffm;
-                    }
-                    else
-                    {
-                        fz = (zheng? fz*ffm+fm*ffz:-ffz*fm+fz*ffm);
-                        fm = fm*ffm;
-                    }
-                    if(fz != 0)
-                    {
-                        int temp = MaxFactor(fz,fm);
-                        fz /= temp;
-                        fm/=temp;
-                    }
+                    fz=(zheng?ffz:-ffz);
+                    fm=ffm;
                 }
+                else
+                {
+                    fz = (zheng? fz*ffm+fm*ffz:-ffz*fm+fz*ffm);
+                    fm = fm*ffm;
+                }
+                int temp = MaxFactor(fz,fm);
+                fz /= temp;
+                fm/=temp;
             }
         }
         if(fz>=0)
         {
-            if(fz>fm)
+            if(fz>=fm)
             {
                 m += fz/fm;
                 fz -= (fz/fm) * fm;
-
             }
-            if(fz!=0)
-                cout<<m<<"+"<<fz<<"/"<<fm<<endl;
-            else
-                cout<<m<<endl;
+            cout<<m<<"+"<<fz<<"/"<<fm<<endl;
         }
         else
         {
@@ -86,16 +78,9 @@ int main(int argc, char *argv[])
             {
                 m -= (-fz)/fm;
                 fz += (-fz/fm) * fm;
-                if(fz==0)
-                {
-                    cout<<m<<endl;
-                }
-                else
-                {
-                    m -= 1;
-                    fz = fm+fz;
-                    cout<<m<<"+"<<fz<<"/"<<fm<<endl;
-                }
+                m -= 1;
+                fz = fm+fz;
+                cout<<m<<"+"<<fz<<"/"<<fm<<endl;
             }
             else if(-fz == fm)
             {
@@ -106,7 +91,7 @@ int main(int argc, char *argv[])
             else
             {
                 m -= 1;
-                fz = fm+fz;
+                fz -= fm-fz;
                 cout<<m<<"+"<<fz<<"/"<<fm<<endl;
             }
         }
