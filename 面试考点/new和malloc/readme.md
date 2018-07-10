@@ -1,7 +1,7 @@
 # malloc和new的异同
 ## 不同
 1. 构造函数： new除了申请空间之外还会调用构造函数，而malloc仅仅是申请空间
-2. 类型： new是一个operator运算符，是可以重写的；而malloc是一个函数
+2. 类型： new是一个operator运算符，是可以重写的；而malloc是一个库函数
 3. 返回类型： new返回的是申请类的对象的指针，而malloc返回void*
 4. 失败情况：new会throw错误，而malloc会返回NULL
 6. override重写：new可以

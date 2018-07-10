@@ -45,6 +45,7 @@ void* newthread3(void *)
 int main(int argc, char *argv[])
 {
     pthread_t mythread[3];
+    void *status;
 
     pthread_create(&mythread[0], NULL, newthread1, NULL);
     sleep(1);
@@ -52,9 +53,9 @@ int main(int argc, char *argv[])
     sleep(1);
     pthread_create(&mythread[2], NULL, newthread3, NULL);
 
-    pthread_join(mythread[0], NULL);
-    pthread_join(mythread[1], NULL);
-    pthread_join(mythread[2], NULL);
+    pthread_join(mythread[0], &status);
+    pthread_join(mythread[1], &status);
+    pthread_join(mythread[2], &status);
 
     return 0;
 }
