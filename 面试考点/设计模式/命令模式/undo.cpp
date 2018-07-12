@@ -20,6 +20,7 @@ class Command
 public:
     Command(RoastCook* temp) { receiver = temp; }
     virtual void ExecuteCmd() = 0;
+
 protected:
     RoastCook* receiver;
 };
